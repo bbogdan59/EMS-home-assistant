@@ -38,16 +38,22 @@ class BridgeCoordinator(DataUpdateCoordinator):
         try:
             await self.client.send(self.entry.data["mapping_version"], samples)
         except InvalidAuth, MappingConflict:
+            if self.stopped:
+                return {"status": "disconnected", "stale_entities": stale_count}
             self.auth_failed = True
             self.entry.async_start_reauth(self.hass)
             return {"status": "reauth_required", "stale_entities": stale_count}
         except BridgeError:
+            if self.stopped:
+                return {"status": "disconnected", "stale_entities": stale_count}
             self.failures += 1
             self.update_interval = timedelta(
                 seconds=min(900, 30 * 2 ** min(self.failures, 5)) + random.uniform(0, 5)
             )
             return {"status": "offline", "stale_entities": stale_count}
         self.failures = 0
+        if self.stopped:
+            return {"status": "disconnected", "stale_entities": stale_count}
         self.update_interval = timedelta(seconds=30)
         self.last_success = dt_util.utcnow()
         return {"status": "stale" if stale_count else "connected", "stale_entities": stale_count}

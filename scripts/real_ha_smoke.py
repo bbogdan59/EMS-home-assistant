@@ -2,7 +2,8 @@
 
 Requires the backend feature flag and a fresh pairing code for a TEST station.
 The code file is never printed; generated credentials stay in the temporary HA
-config. Set SSL_CERT_FILE to a test CA bundle when using a local TLS backend.
+config. Set REQUESTS_CA_BUNDLE and SSL_CERT_FILE to a bundle containing the normal
+public CAs and your test CA when using a local TLS backend.
 """
 
 import argparse

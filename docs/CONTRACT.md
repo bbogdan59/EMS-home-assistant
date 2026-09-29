@@ -1,5 +1,9 @@
 # HTTPS bridge contract v1
 
+Consumer reference for the canonical contract in
+`EMS-management-platform/contracts/home_assistant/`. Backend schema and policy
+remain owned by the platform; this copy documents the public HA client behavior.
+
 Transport: verified HTTPS, no redirects. The HA bridge initiates all requests.
 Maximum request body 32 KiB; maximum 20 mappings or samples per batch. Unknown
 fields and versions are rejected. Responses and pairing codes use `Cache-Control:

@@ -13,15 +13,13 @@ Requires **Home Assistant 2026.9+** and the EMS HACS bridge API described in
 [the contract](docs/CONTRACT.md). Enable `HOME_ASSISTANT_BRIDGE_ENABLED=true` on
 the backend and apply its database migration. Run its worker/beat for retention.
 
-This repository is currently private. HACS does not support private repositories;
-until the owner chooses public distribution, copy `custom_components/ems_home_assistant`
-from an authenticated checkout to your HA configuration's `custom_components`
-directory and restart Home Assistant. Repository visibility is not changed by
-this integration.
-
-For public distribution: HACS → Custom repositories → add
+HACS → Custom repositories → add
 `https://github.com/bbogdan59/EMS-home-assistant`, category **Integration** → download
 **EMS Home Assistant** → restart. This repository is not part of HACS's default catalog.
+
+For manual installation, copy `custom_components/ems_home_assistant` to your HA
+configuration's `custom_components` directory and restart. Distributed under the
+[MIT license](LICENSE).
 
 ## Connect
 

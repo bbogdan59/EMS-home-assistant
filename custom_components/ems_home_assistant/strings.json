@@ -1,0 +1,150 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to EMS",
+        "description": "In EMS, open your station \u2192 Home Assistant and generate a pairing code. Enter your EMS HTTPS URL and the one-time code. No Home Assistant access token is required.",
+        "data": {
+          "url": "EMS HTTPS URL",
+          "code": "One-time pairing code"
+        }
+      },
+      "confirm": {
+        "title": "Confirm your connection",
+        "description": "Connect **{instance}** to **{station}** ({station_id}). Continue only if this is your intended station.",
+        "data": {}
+      },
+      "entity": {
+        "title": "Select energy context",
+        "description": "Only selected entities are shared. The list shows entity/domain, unit, integration source and last update. Do not select individual presence, security, cameras, locks, alarms or location sensors. Occupancy must be a single household aggregate. Renamed or replaced entities require remapping.",
+        "data": {
+          "entity_id": "Entity (domain \u00b7 unit \u00b7 source \u00b7 last updated)",
+          "kind": "EMS context type",
+          "max_age_seconds": "Freshness limit in seconds",
+          "source_validated": "I verified the power/energy source and its units",
+          "simulated": "This source contains simulated/test data",
+          "add_another": "Add another entity"
+        }
+      },
+      "review": {
+        "title": "Review data sharing",
+        "description": "{mappings}\n\nEMS stores only the latest value, removes values after 24 hours and keeps timestamps for replay protection. Context never replaces the inverter meter or authorizes device control.",
+        "data": {
+          "consent": "Share only these selected entities with EMS",
+          "occupancy_consent": "Allow this aggregate home/away sensor (no individual presence)",
+          "insights_consent": "Allow future read-only insights and notifications based on this context"
+        }
+      },
+      "test": {
+        "title": "Test synchronization",
+        "description": "Submit to send the reviewed mapping and one sample per selected entity. Unknown or unavailable values remain null. Success confirms EMS accepted this bridge; it does not certify the sensors.",
+        "data": {}
+      }
+    },
+    "error": {
+      "cannot_connect": "EMS is unreachable, disabled or rate limited. Check the HTTPS URL and retry.",
+      "invalid_auth": "The code or credential is expired, already used or revoked. Generate a new code in EMS.",
+      "invalid_response": "EMS rejected the request. Check backend compatibility and reconnect if mappings changed.",
+      "invalid_url": "Enter an HTTPS origin with no path, credentials, query or fragment.",
+      "invalid_mapping": "Check entity domain, unit, device class, state class, freshness and source validation.",
+      "duplicate_entity": "This entity is already selected.",
+      "aggregate_only": "Only one household occupancy sensor is allowed.",
+      "consent_required": "Confirm sharing the selected entities.",
+      "occupancy_consent_required": "Aggregate occupancy needs separate consent."
+    },
+    "abort": {
+      "already_configured": "This EMS station is already configured. Use its reauthentication flow to pair again.",
+      "wrong_station": "The code belongs to another station. Generate a code for the original station.",
+      "no_entities": "No eligible sensor entities are available.",
+      "reauth_successful": "EMS reconnected successfully."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage EMS",
+        "menu_options": {
+          "entity": "Replace entity mapping and consent",
+          "disconnect": "Disconnect and delete shared context"
+        }
+      },
+      "entity": {
+        "title": "Select energy context",
+        "description": "Only selected entities are shared. The list shows entity/domain, unit, integration source and last update. Do not select individual presence, security, cameras, locks, alarms or location sensors. Occupancy must be a single household aggregate. Renamed or replaced entities require remapping.",
+        "data": {
+          "entity_id": "Entity (domain \u00b7 unit \u00b7 source \u00b7 last updated)",
+          "kind": "EMS context type",
+          "max_age_seconds": "Freshness limit in seconds",
+          "source_validated": "I verified the power/energy source and its units",
+          "simulated": "This source contains simulated/test data",
+          "add_another": "Add another entity"
+        }
+      },
+      "review": {
+        "title": "Review data sharing",
+        "description": "{mappings}\n\nEMS stores only the latest value, removes values after 24 hours and keeps timestamps for replay protection. Context never replaces the inverter meter or authorizes device control.",
+        "data": {
+          "consent": "Share only these selected entities with EMS",
+          "occupancy_consent": "Allow this aggregate home/away sensor (no individual presence)",
+          "insights_consent": "Allow future read-only insights and notifications based on this context"
+        }
+      },
+      "test": {
+        "title": "Test synchronization",
+        "description": "Submit to send the reviewed mapping and one sample per selected entity. Unknown or unavailable values remain null. Success confirms EMS accepted this bridge; it does not certify the sensors.",
+        "data": {}
+      },
+      "disconnect": {
+        "title": "Disconnect and erase shared context",
+        "description": "Submit to stop this bridge, revoke its EMS credential and delete its shared context. If EMS is unreachable, publishing stops locally; retry here or disconnect from EMS to confirm remote deletion.",
+        "data": {}
+      }
+    },
+    "error": {
+      "cannot_connect": "EMS is unreachable, disabled or rate limited. Check the HTTPS URL and retry.",
+      "invalid_auth": "The code or credential is expired, already used or revoked. Generate a new code in EMS.",
+      "invalid_response": "EMS rejected the request. Check backend compatibility and reconnect if mappings changed.",
+      "invalid_url": "Enter an HTTPS origin with no path, credentials, query or fragment.",
+      "invalid_mapping": "Check entity domain, unit, device class, state class, freshness and source validation.",
+      "duplicate_entity": "This entity is already selected.",
+      "aggregate_only": "Only one household occupancy sensor is allowed.",
+      "consent_required": "Confirm sharing the selected entities.",
+      "occupancy_consent_required": "Aggregate occupancy needs separate consent."
+    },
+    "abort": {
+      "already_configured": "This EMS station is already configured. Use its reauthentication flow to pair again.",
+      "wrong_station": "The code belongs to another station. Generate a code for the original station.",
+      "no_entities": "No eligible sensor entities are available.",
+      "reauth_successful": "EMS reconnected successfully."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "bridge_status": {
+        "name": "Bridge status",
+        "state": {
+          "connecting": "Connecting",
+          "connected": "Connected",
+          "stale": "Stale",
+          "offline": "Offline",
+          "reauth_required": "Reauthentication required",
+          "disconnected": "Disconnected"
+        }
+      }
+    }
+  },
+  "selector": {
+    "kind": {
+      "options": {
+        "power": "Power",
+        "energy": "Energy",
+        "temperature": "Indoor temperature",
+        "occupancy": "Aggregate household occupancy",
+        "boiler_status": "Boiler status",
+        "hvac_status": "HVAC / heat pump status",
+        "evse_status": "EV charger status",
+        "flexibility": "Declared flexible power"
+      }
+    }
+  }
+}
